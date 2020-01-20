@@ -105,7 +105,7 @@ contract('TimeLockTokenEscrow tests', function ([creator, beneficiary1, random, 
             (await this.token.balanceOf(beneficiary1)).should.be.bignumber.equal('0');
 
             // Fast forward time by over an hour
-            await time.increaseTo(oneHourFromNow.add(new BN('60')));
+            await time.increaseTo(oneHourFromNow.add(new BN('3600')));
 
             const {logs} = await this.timeLockTokenEscrow.withdrawal(beneficiary1, {from: random});
             await expectEvent.inLogs(logs, 'Withdrawal', {
@@ -115,6 +115,48 @@ contract('TimeLockTokenEscrow tests', function ([creator, beneficiary1, random, 
 
             // Check the balance of beneficiary1
             (await this.token.balanceOf(beneficiary1)).should.be.bignumber.equal(amountToLockUp);
+         });
+      });
+
+      describe('requires', function() {
+         it('Fails when no tokens are locked up for an address', async function() {
+            await expectRevert(
+                this.timeLockTokenEscrow.withdrawal(random, {from: random}),
+                "There are no tokens locked up for this address"
+            );
+         });
+
+         it('Fails when tokens have already been claimed', async function() {
+            await lockupTokens(
+                this.token,
+                this.timeLockTokenEscrow,
+                beneficiary1,
+                amountToLockUp,
+                new BN('0')
+            );
+
+            await this.timeLockTokenEscrow.withdrawal(beneficiary1, {from: random});
+
+            await expectRevert(
+                this.timeLockTokenEscrow.withdrawal(beneficiary1),
+                "Tokens have already been claimed"
+            );
+         });
+
+         it('Fails when tokens are still within their lockup period', async function() {
+            const fiveHoursFromNow = new BN((now() + ((60*60)*5)).toString());
+            await lockupTokens(
+                this.token,
+                this.timeLockTokenEscrow,
+                beneficiary1,
+                amountToLockUp,
+                fiveHoursFromNow
+            );
+
+            await expectRevert(
+                this.timeLockTokenEscrow.withdrawal(beneficiary1),
+                "Tokens are still locked up"
+            );
          });
       });
    });
