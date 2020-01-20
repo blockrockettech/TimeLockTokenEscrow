@@ -7,6 +7,17 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 contract TimeLockTokenEscrow is ReentrancyGuard {
     using SafeMath for uint256;
 
+    event Lockup(
+        address indexed _beneficiary,
+        uint256 _amount,
+        uint256 _lockedUntil
+    );
+
+    event Withdrawal(
+        address indexed _beneficiary,
+        address indexed _caller
+    );
+
     struct TimeLock {
         uint256 amount;
         uint256 lockedUntil;
@@ -35,6 +46,8 @@ contract TimeLockTokenEscrow is ReentrancyGuard {
 
         bool transferSuccess = token.transferFrom(msg.sender, address(this), _amount);
         require(transferSuccess, "Failed to escrow tokens into the contract");
+
+        emit Lockup(_beneficiary, _amount, _lockedUntil);
     }
 
     function withdrawal(address _beneficiary) external nonReentrant {
@@ -47,6 +60,8 @@ contract TimeLockTokenEscrow is ReentrancyGuard {
 
         bool transferSuccess = token.transfer(_beneficiary, lockup.amount);
         require(transferSuccess, "Failed to send tokens to the beneficiary");
+
+        emit Withdrawal(_beneficiary, msg.sender);
     }
 
     function approvalAmount(address owner) external view returns (uint256) {
