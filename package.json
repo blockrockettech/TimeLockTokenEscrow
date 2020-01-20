@@ -12,6 +12,7 @@
   "author": "Blockrocket Tech",
   "license": "MIT",
   "devDependencies": {
+    "@blockrocket/utils": "^1.0.8",
     "@openzeppelin/contracts": "^2.4.0",
     "@openzeppelin/test-helpers": "^0.5.4",
     "@truffle/hdwallet-provider": "^1.0.29",
