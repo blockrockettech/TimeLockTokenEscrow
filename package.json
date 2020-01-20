@@ -2,7 +2,8 @@
   "name": "timelocktokenescrow",
   "version": "1.0.0",
   "scripts": {
-    "test": "truffle test --network development"
+    "test": "truffle test --network development",
+    "coverage": "truffle run coverage"
   },
   "repository": {
     "type": "git",
