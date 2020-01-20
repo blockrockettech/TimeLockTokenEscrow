@@ -5,6 +5,8 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 contract TimeLockTokenEscrow is ReentrancyGuard {
+    using SafeMath for uint256;
+
     struct TimeLock {
         uint256 amount;
         uint256 lockedUntil;
@@ -45,5 +47,9 @@ contract TimeLockTokenEscrow is ReentrancyGuard {
 
         bool transferSuccess = token.transfer(_beneficiary, lockup.amount);
         require(transferSuccess, "Failed to send tokens to the beneficiary");
+    }
+
+    function approvalAmount(address owner) external view returns (uint256) {
+        return token.allowance(owner, address(this));
     }
 }
