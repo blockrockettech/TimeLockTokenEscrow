@@ -1,0 +1,20 @@
+{
+  "name": "timelocktokenescrow",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "truffle test --network development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blockrockettech/TimeLockTokenEscrow.git"
+  },
+  "author": "Blockrocket Tech",
+  "license": "MIT",
+  "devDependencies": {
+    "@openzeppelin/contracts": "^2.4.0",
+    "@openzeppelin/test-helpers": "^0.5.4",
+    "@truffle/hdwallet-provider": "^1.0.29",
+    "solidity-coverage": "^0.7.0-beta.2",
+    "truffle-plugin-verify": "^0.3.8"
+  }
+}
