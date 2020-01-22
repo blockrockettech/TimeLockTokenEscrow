@@ -29,6 +29,9 @@ contract('TimeLockTokenEscrow tests', function ([creator, beneficiary1, random, 
    describe('lock() - Locking up tokens', function() {
       describe('happy path', function() {
          it('Locks up a specified amount of tokens', async function() {
+            // Ensure timeLockTokenEscrow has no tokens
+            (await this.token.balanceOf(this.timeLockTokenEscrow.address)).should.be.bignumber.equal('0');
+
             const oneHourFromNow = new BN((now() + (60*60)).toString());
             const {logs} = await lockupTokens(
                 this.token,
@@ -43,6 +46,9 @@ contract('TimeLockTokenEscrow tests', function ([creator, beneficiary1, random, 
                _amount: amountToLockUp,
                _lockedUntil: oneHourFromNow
             });
+
+            // Ensure timeLockTokenEscrow has tokens
+            (await this.token.balanceOf(this.timeLockTokenEscrow.address)).should.be.bignumber.equal('5000');
          });
       });
 
