@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/blockrockettech/TimeLockTokenEscrow.git"
   },
-  "author": "Blockrocket Tech",
+  "author": "BlockRocket Tech",
   "license": "MIT",
   "devDependencies": {
     "@blockrocket/utils": "^1.0.8",
