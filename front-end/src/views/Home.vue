@@ -147,7 +147,8 @@
                 this.web3.signer,
             );
 
-            const tokenAddress = utils.getContractAddressFromTruffleConf(TestToken, this.web3.chain.chainId);
+            // const tokenAddress = utils.getContractAddressFromTruffleConf(TestToken, this.web3.chain.chainId);
+            const tokenAddress = await this.web3.escrowContract.token();
             this.web3.genericERC20TokenContract = new ethers.Contract(
                 tokenAddress,
                 TestToken.abi,
