@@ -661,11 +661,9 @@ contract TestToken is ERC20Detailed, Ownable {
         tokensAddress = _tokensAddress;
 
 //        teamTokensVesting = new TokenVesting(tokensAddress, 91 days, 0 days, 274 days, false);
-
-        // 3B tokens (= 790M seed + 2.21B private)
+        
         _mint(tokensAddress, 3000000000 * (10 ** uint256(decimals())));
 
-        // 7B tokens (= 1.17B marketing + 2.58B reserve + 1.2B development + 500M bounty + 1.55 team&advisors)
 //        _mint(address(teamTokensVesting), 7000000000 * (10 ** uint256(decimals())));
 
         require(totalSupply() == 3000000000 * 10**uint256(decimals()));
