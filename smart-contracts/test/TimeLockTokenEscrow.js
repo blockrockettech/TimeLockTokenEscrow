@@ -3,14 +3,14 @@ const {ZERO_ADDRESS} = constants;
 require('chai').should();
 
 const TimeLockTokenEscrow = artifacts.require('TimeLockTokenEscrow');
-const GenericERC20Token = artifacts.require('GenericERC20Token');
+const TestToken = artifacts.require('TestToken');
 
 function now() { return Math.floor(Date.now() / 1000); }
 
 contract('TimeLockTokenEscrow tests', function ([creator, beneficiary1, random, ...accounts]) {
    beforeEach(async function() {
       this.initialSupply = new BN('1000000').mul(new BN('10').pow(new BN('18')));
-      this.token = await GenericERC20Token.new(creator, this.initialSupply, {from: creator});
+      this.token = await TestToken.new(creator, {from: creator});
       this.timeLockTokenEscrow = await TimeLockTokenEscrow.new(this.token.address, {from: creator});
    });
 

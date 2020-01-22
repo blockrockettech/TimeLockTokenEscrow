@@ -1,4 +1,4 @@
-pragma solidity 0.5.0;
+pragma solidity ^0.5.0;
 
 /**
  * @title SafeMath
@@ -643,8 +643,8 @@ contract TokenVesting is Ownable {
     }
 }
 
-contract TapToken is ERC20Detailed, Ownable {
-    address public tapTokensAddress;
+contract TestToken is ERC20Detailed, Ownable {
+    address public tokensAddress;
 
     TokenVesting public teamTokensVesting;
 
@@ -655,20 +655,20 @@ contract TapToken is ERC20Detailed, Ownable {
         _;
     }
 
-    constructor(address _tapTokensAddress) public ERC20Detailed("Tap", "XTP", 18) {
-        require(_tapTokensAddress != address(0));
+    constructor(address _tokensAddress) public ERC20Detailed("Test", "TST", 18) {
+        require(_tokensAddress != address(0));
 
-        tapTokensAddress = _tapTokensAddress;
+        tokensAddress = _tokensAddress;
 
-        teamTokensVesting = new TokenVesting(tapTokensAddress, 91 days, 0 days, 274 days, false);
+//        teamTokensVesting = new TokenVesting(tokensAddress, 91 days, 0 days, 274 days, false);
 
         // 3B tokens (= 790M seed + 2.21B private)
-        _mint(tapTokensAddress, 3000000000 * (10 ** uint256(decimals())));
+        _mint(tokensAddress, 3000000000 * (10 ** uint256(decimals())));
 
         // 7B tokens (= 1.17B marketing + 2.58B reserve + 1.2B development + 500M bounty + 1.55 team&advisors)
-        _mint(address(teamTokensVesting), 7000000000 * (10 ** uint256(decimals())));
+//        _mint(address(teamTokensVesting), 7000000000 * (10 ** uint256(decimals())));
 
-        require(totalSupply() == 1000000000 * 10**uint256(decimals()));
+        require(totalSupply() == 3000000000 * 10**uint256(decimals()));
     }
 
     function closeSale() beforeEnd onlyOwner public {
