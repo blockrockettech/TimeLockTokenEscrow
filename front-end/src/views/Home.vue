@@ -24,12 +24,11 @@
                                    v-model="form.amount"/>
                         </div>
                         <div class="mt-1">
-                            <label class="fixed-width-label text-right" for="inputLockedUntil">Locked Until: </label>
-                            <input type="text"
-                                   id="inputLockedUntil"
-                                   class="ml-2 form-control fixed-width-input d-inline-block"
-                                   placeholder="123456"
-                                   v-model="form.lockedUntil"/>
+                            <label class="fixed-width-label text-right">Locked Until: </label>
+                            <datetime format="DD-MM-YYYY h:i:s"
+                                      v-model='form.lockedUntil'
+                                      firstDayOfWeek="1"
+                                      class="ml-2 form-control fixed-width-input d-inline-block test" />
                         </div>
                     </div>
                     <div class="card-footer text-right">
@@ -115,7 +114,6 @@
                     <div class="card-footer text-right">
                         <b-button variant="primary" class="mt-2" @click="balance">
                             <span>Balance</span>
-                            <!--<SmallSpinner v-else/>-->
                         </b-button>
                     </div>
                 </div>
@@ -131,10 +129,11 @@
     import TestToken from '../truffleconf/TestToken';
 
     import SmallSpinner from "../components/SmallSpinner";
+    import datetime from 'vuejs-datetimepicker'
 
     export default {
         name: 'home',
-        components: {SmallSpinner},
+        components: {SmallSpinner, datetime},
         async created() {
             await window.ethereum.enable();
             this.web3.provider = new ethers.providers.Web3Provider(web3.currentProvider);
@@ -194,7 +193,7 @@
                 const lockupTx = await this.web3.escrowContract.lock(
                     this.form.beneficiary,
                     ethers.utils.parseUnits(this.form.amount, '18'),
-                    this.form.lockedUntil,
+                    this.$moment(this.form.lockedUntil, 'DD-MM-YYYY HH:mm:ss').unix(),
                     {
                         gasLimit: 250000
                     }
@@ -229,13 +228,17 @@
     };
 </script>
 
-<style scoped>
+<style>
     .fixed-width-label {
         width: 100px;
     }
 
     .fixed-width-input {
         width: 375px;
+    }
+
+    input#tj-datetime-input {
+        border: 1px solid #ffffff;
     }
 
     .min-height-300 {
