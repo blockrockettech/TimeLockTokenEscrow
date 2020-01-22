@@ -143,7 +143,7 @@
                 const escrowContractAddress = utils.getContractAddressFromTruffleConf(TimeLockTokenEscrow, this.web3.chain.chainId);
 
                 // Approve
-                const approveTx = await this.web3.genericERC20TokenContract.approve(escrowContractAddress, this.form.amount);
+                const approveTx = await this.web3.genericERC20TokenContract.approve(escrowContractAddress, ethers.utils.parseUnits(this.form.amount, '18'));
 
                 // Lockup
                 const lockupTx = await this.web3.escrowContract.lock(
