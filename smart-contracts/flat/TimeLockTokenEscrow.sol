@@ -302,7 +302,6 @@ contract TimeLockTokenEscrow is ReentrancyGuard {
     struct TimeLock {
         uint256 amount;
         uint256 lockedUntil;
-        bool claimed;
     }
 
     IERC20 public token;
@@ -321,8 +320,7 @@ contract TimeLockTokenEscrow is ReentrancyGuard {
 
         beneficiaryToTimeLock[_beneficiary] = TimeLock({
             amount: _amount,
-            lockedUntil: _lockedUntil,
-            claimed: false
+            lockedUntil: _lockedUntil
         });
 
         bool transferSuccess = token.transferFrom(msg.sender, address(this), _amount);
@@ -334,18 +332,18 @@ contract TimeLockTokenEscrow is ReentrancyGuard {
     function withdrawal(address _beneficiary) external nonReentrant {
         TimeLock storage lockup = beneficiaryToTimeLock[_beneficiary];
         require(lockup.amount > 0, "There are no tokens locked up for this address");
-        require(!lockup.claimed, "Tokens have already been claimed");
         require(now >= lockup.lockedUntil, "Tokens are still locked up");
 
-        lockup.claimed = true;
+        uint256 transferAmount = lockup.amount;
+        lockup.amount = 0;
 
-        bool transferSuccess = token.transfer(_beneficiary, lockup.amount);
+        bool transferSuccess = token.transfer(_beneficiary, transferAmount);
         require(transferSuccess, "Failed to send tokens to the beneficiary");
 
         emit Withdrawal(_beneficiary, msg.sender);
     }
 
-    function approvalAmount(address owner) external view returns (uint256) {
-        return token.allowance(owner, address(this));
+    function approvalAmount(address _owner) external view returns (uint256) {
+        return token.allowance(_owner, address(this));
     }
 }

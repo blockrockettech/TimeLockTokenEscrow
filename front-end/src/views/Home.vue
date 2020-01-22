@@ -84,7 +84,7 @@
     import {ethers} from 'ethers';
     import utils from '../utils';
     import TimeLockTokenEscrow from '../truffleconf/TimeLockTokenEscrow';
-    import GenericERC20Token from '../truffleconf/GenericERC20Token';
+    import TestToken from '../truffleconf/TestToken';
 
     import SmallSpinner from "../components/SmallSpinner";
 
@@ -104,10 +104,10 @@
                 this.web3.signer,
             );
 
-            const tokenAddress = utils.getContractAddressFromTruffleConf(GenericERC20Token, this.web3.chain.chainId);
+            const tokenAddress = utils.getContractAddressFromTruffleConf(TestToken, this.web3.chain.chainId);
             this.web3.genericERC20TokenContract = new ethers.Contract(
                 tokenAddress,
-                GenericERC20Token.abi,
+                TestToken.abi,
                 this.web3.signer
             );
         },
