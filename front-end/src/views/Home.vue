@@ -24,11 +24,11 @@
                                    v-model="form.amount"/>
                         </div>
                         <div class="mt-1">
-                            <label class="fixed-width-label text-right" for="inputLockedUntil">Locked Until: </label>
+                            <label class="fixed-width-label text-right" for="inputLockedUntil">Locked Until Timestamp: </label>
                             <input type="text"
                                    id="inputLockedUntil"
                                    class="ml-2 form-control fixed-width-input d-inline-block"
-                                   placeholder="10/05/2020"
+                                   placeholder="123456"
                                    v-model="form.lockedUntil"/>
                         </div>
                     </div>
