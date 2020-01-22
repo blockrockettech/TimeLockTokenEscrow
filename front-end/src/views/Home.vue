@@ -147,7 +147,8 @@
                 this.web3.signer,
             );
 
-            const tokenAddress = utils.getContractAddressFromTruffleConf(TestToken, this.web3.chain.chainId);
+            // const tokenAddress = utils.getContractAddressFromTruffleConf(TestToken, this.web3.chain.chainId);
+            const tokenAddress = await this.web3.escrowContract.token();
             this.web3.genericERC20TokenContract = new ethers.Contract(
                 tokenAddress,
                 TestToken.abi,
@@ -208,7 +209,12 @@
             async withdrawal() {
                 this.withdrawing = true;
 
-                const withdrawalTx = await this.web3.escrowContract.withdrawal(this.form.beneficiaryWithdrawal);
+                const withdrawalTx = await this.web3.escrowContract.withdrawal(
+                    this.form.beneficiaryWithdrawal,
+                    {
+                        gasLimit: 250000
+                    }
+                );
                 await withdrawalTx.wait(1);
 
                 this.withdrawing = false;
