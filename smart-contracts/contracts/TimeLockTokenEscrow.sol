@@ -1,15 +1,13 @@
 pragma solidity 0.5.14;
 
-import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 contract TimeLockTokenEscrow is ReentrancyGuard {
-    using SafeMath for uint256;
 
     event Lockup(
         address indexed _beneficiary,
-        uint256 _amount,
+        uint256 indexed _amount,
         uint256 _lockedUntil
     );
 

@@ -1,5 +1,4 @@
 const { getAccountAddress } = require('@blockrocket/utils');
-const TestToken = artifacts.require("TestToken");
 const TimeLockTokenEscrow = artifacts.require("TimeLockTokenEscrow");
 
 const MNEMONIC = process.env.ESCROW_MNEMONIC || '';
@@ -10,10 +9,7 @@ module.exports = async function (deployer, network, accounts) {
 
     const creator = getAccountAddress(accounts, 0, network, MNEMONIC, INFURA_KEY);
 
-    const token = await TestToken.deployed();
-    console.log('token.address', token.address);
-
-    await deployer.deploy(TimeLockTokenEscrow, token.address, {from: creator});
+    await deployer.deploy(TimeLockTokenEscrow, "0x6368e1E18c4C419DDFC608A0BEd1ccb87b9250fc", {from: creator});
     const escrow = await TimeLockTokenEscrow.deployed();
     console.log('escrow.address', escrow.address);
 };
