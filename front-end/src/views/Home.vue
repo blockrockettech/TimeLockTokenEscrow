@@ -97,6 +97,28 @@
                 </div>
             </div>
             <div class="col">
+                <div class="card min-height-300">
+                    <div class="card-header">
+                        <h5>XTP Balance</h5>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <label class="fixed-width-label text-right" for="inputAddress">Address:</label>
+                            <input type="text"
+                                   id="inputAddress"
+                                   class="ml-2 form-control fixed-width-input d-inline-block"
+                                   placeholder="0x123..."
+                                   v-model="form.address"/>
+                        </div>
+                        <div class="mt-4 text-left alert alert-info"><strong>Balance:</strong> {{tokenBalance}}</div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <b-button variant="primary" class="mt-2" @click="balance">
+                            <span>Balance</span>
+                            <!--<SmallSpinner v-else/>-->
+                        </b-button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -155,7 +177,8 @@
                     genericERC20TokenContract: null
                 },
                 lockingUp: false,
-                withdrawing: false
+                withdrawing: false,
+                tokenBalance: null,
             };
         },
         methods: {
@@ -190,6 +213,11 @@
                 await withdrawalTx.wait(1);
 
                 this.withdrawing = false;
+            },
+            async balance() {
+
+                const balanceTx = await this.web3.genericERC20TokenContract.balanceOf(this.form.address);
+                this.tokenBalance = ethers.utils.formatUnits(balanceTx, '18');
             },
             async search() {
                 const {amount, lockedUntil} = await this.web3.escrowContract.beneficiaryToTimeLock(this.form.beneficiaryLockup);
