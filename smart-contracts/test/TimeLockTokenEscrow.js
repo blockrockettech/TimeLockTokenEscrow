@@ -18,7 +18,7 @@ contract('TimeLockTokenEscrow tests', function ([creator, beneficiary1, random, 
       // Approve the contract first and check its allowance after
       await token.approve(escrowContract.address, amount, {from: creator});
 
-      (await escrowContract.approvalAmount(creator)).should.be.bignumber.equal(amount);
+      (await token.allowance(creator, escrowContract.address)).should.be.bignumber.equal(amount);
 
       // Lock up the tokens
       return await escrowContract.lock(beneficiary, amount, lockedUntil, {from: creator});
