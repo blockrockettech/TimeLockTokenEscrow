@@ -4,7 +4,7 @@
             <div class="col">
                 <div class="card min-height-300">
                     <div class="card-header">
-                        <h5>Token Lockup</h5>
+                        <h5>Time Lock Escrow</h5>
                     </div>
                     <div class="card-body">
                         <div>
@@ -24,7 +24,7 @@
                                    v-model="form.amount"/>
                         </div>
                         <div class="mt-1">
-                            <label class="fixed-width-label text-right" for="inputLockedUntil">Locked Until Timestamp: </label>
+                            <label class="fixed-width-label text-right" for="inputLockedUntil">Locked Until: </label>
                             <input type="text"
                                    id="inputLockedUntil"
                                    class="ml-2 form-control fixed-width-input d-inline-block"
@@ -43,7 +43,7 @@
             <div class="col">
                 <div class="card min-height-300">
                     <div class="card-header">
-                        <h5>Withdrawal</h5>
+                        <h5>Time Lock Withdrawal</h5>
                     </div>
                     <div class="card-body">
                         <div>
@@ -66,8 +66,8 @@
         </div>
         <div class="row mt-5">
             <div class="col">
-                <div class="card">
-                    <div class="card-header"><h5>Lock up Information</h5></div>
+                <div class="card min-height-300">
+                    <div class="card-header"><h5>Time Lock Information</h5></div>
                     <div class="card-body">
                         <div>
                             <label class="fixed-width-label text-right" for="inputBeneficiaryLockup">Beneficiary:</label>
@@ -110,7 +110,7 @@
                                    placeholder="0x123..."
                                    v-model="form.address"/>
                         </div>
-                        <div class="mt-4 text-left alert alert-info"><strong>Balance:</strong> {{tokenBalance}}</div>
+                        <div class="mt-4 text-left alert alert-info" v-if="tokenBalance"><strong>Balance:</strong> {{tokenBalance}}</div>
                     </div>
                     <div class="card-footer text-right">
                         <b-button variant="primary" class="mt-2" @click="balance">
