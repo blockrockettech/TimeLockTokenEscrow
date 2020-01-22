@@ -64,7 +64,7 @@ contract TimeLockTokenEscrow is ReentrancyGuard {
         emit Withdrawal(_beneficiary, msg.sender);
     }
 
-    function approvalAmount(address owner) external view returns (uint256) {
-        return token.allowance(owner, address(this));
+    function approvalAmount(address _owner) external view returns (uint256) {
+        return token.allowance(_owner, address(this));
     }
 }
