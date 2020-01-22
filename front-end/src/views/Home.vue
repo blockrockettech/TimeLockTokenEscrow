@@ -26,9 +26,9 @@
                         <div class="mt-1">
                             <label class="fixed-width-label text-right">Locked Until: </label>
                             <DateTimePicker format="DD-MM-YYYY h:i:s"
-                                      v-model='form.lockedUntil'
-                                      firstDayOfWeek="1"
-                                      class="ml-2 form-control fixed-width-input d-inline-block test" />
+                                            v-model='form.lockedUntil'
+                                            firstDayOfWeek="1"
+                                            class="ml-2 form-control fixed-width-input d-inline-block test"/>
                         </div>
                     </div>
                     <div class="card-footer text-right">
@@ -209,7 +209,12 @@
             async withdrawal() {
                 this.withdrawing = true;
 
-                const withdrawalTx = await this.web3.escrowContract.withdrawal(this.form.beneficiaryWithdrawal);
+                const withdrawalTx = await this.web3.escrowContract.withdrawal(
+                    this.form.beneficiaryWithdrawal,
+                    {
+                        gasLimit: 250000
+                    }
+                );
                 await withdrawalTx.wait(1);
 
                 this.withdrawing = false;
