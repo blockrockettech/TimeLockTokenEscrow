@@ -2,35 +2,43 @@
     <div class="container mt-4">
         <div class="row mt-2">
             <div class="col">
-                <h3>Lockup</h3>
-                <div>
-                    <label class="fixed-width-label text-right" for="inputBeneficiary">Beneficiary:</label>
-                    <input type="text"
-                           id="inputBeneficiary"
-                           class="ml-2 form-control fixed-width-input d-inline-block"
-                           placeholder="0x123..."
-                           v-model="form.beneficiary"/>
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Token Lockup</h5>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <label class="fixed-width-label text-right" for="inputBeneficiary">Beneficiary:</label>
+                            <input type="text"
+                                   id="inputBeneficiary"
+                                   class="ml-2 form-control fixed-width-input d-inline-block"
+                                   placeholder="0x123..."
+                                   v-model="form.beneficiary"/>
+                        </div>
+                        <div class="mt-1">
+                            <label class="fixed-width-label text-right" for="inputAmount">Amount: </label>
+                            <input type="text"
+                                   id="inputAmount"
+                                   class="ml-2 form-control fixed-width-input d-inline-block"
+                                   placeholder="500"
+                                   v-model="form.amount"/>
+                        </div>
+                        <div class="mt-1">
+                            <label class="fixed-width-label text-right" for="inputLockedUntil">Locked Until: </label>
+                            <input type="text"
+                                   id="inputLockedUntil"
+                                   class="ml-2 form-control fixed-width-input d-inline-block"
+                                   placeholder="10/05/2020"
+                                   v-model="form.lockedUntil"/>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <b-button variant="primary" class="mt-2" @click="lockupTokens">
+                            <span v-if="!lockingUp">Lockup</span>
+                            <SmallSpinner v-else/>
+                        </b-button>
+                    </div>
                 </div>
-                <div class="mt-1">
-                    <label class="fixed-width-label text-right" for="inputAmount">Amount: </label>
-                    <input type="text"
-                           id="inputAmount"
-                           class="ml-2 form-control fixed-width-input d-inline-block"
-                           placeholder="500"
-                           v-model="form.amount"/>
-                </div>
-                <div class="mt-1">
-                    <label class="fixed-width-label text-right" for="inputLockedUntil">Locked Until: </label>
-                    <input type="text"
-                           id="inputLockedUntil"
-                           class="ml-2 form-control fixed-width-input d-inline-block"
-                           placeholder="10/05/2020"
-                           v-model="form.lockedUntil"/>
-                </div>
-                <b-button variant="primary" class="mt-2" @click="lockupTokens">
-                    <span v-if="!lockingUp">Lockup</span>
-                    <SmallSpinner v-else />
-                </b-button>
             </div>
             <div class="col">
                 <h3>Withdrawal</h3>
@@ -44,7 +52,7 @@
                 </div>
                 <b-button variant="primary" class="mt-2" @click="withdrawal">
                     <span v-if="!withdrawing">Withdraw</span>
-                    <SmallSpinner v-else />
+                    <SmallSpinner v-else/>
                 </b-button>
             </div>
         </div>
@@ -134,7 +142,7 @@
                 },
                 lockingUp: false,
                 withdrawing: false
-            }
+            };
         },
         methods: {
             async lockupTokens() {
@@ -176,7 +184,7 @@
                 this.lockUp.beneficiary = this.form.beneficiaryLockup;
             }
         }
-    }
+    };
 </script>
 
 <style scoped>
