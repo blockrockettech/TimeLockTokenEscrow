@@ -1,34 +1,54 @@
 <template>
     <div class="container mt-4">
         <h1>Time Lock Token Escrow (XTP)</h1>
-        <div>
-            <label class="fixed-width-label text-right" for="inputBeneficiary">Beneficiary:</label>
-            <input type="text"
-                   id="inputBeneficiary"
-                   class="ml-2 form-control fixed-width-input d-inline-block"
-                   placeholder="0x123..."
-                   v-model="form.beneficiary"/>
+        <div class="row mt-2">
+            <div class="col">
+                <h3>Lockup</h3>
+                <div>
+                    <label class="fixed-width-label text-right" for="inputBeneficiary">Beneficiary:</label>
+                    <input type="text"
+                           id="inputBeneficiary"
+                           class="ml-2 form-control fixed-width-input d-inline-block"
+                           placeholder="0x123..."
+                           v-model="form.beneficiary"/>
+                </div>
+                <div class="mt-1">
+                    <label class="fixed-width-label text-right" for="inputAmount">Amount: </label>
+                    <input type="text"
+                           id="inputAmount"
+                           class="ml-2 form-control fixed-width-input d-inline-block"
+                           placeholder="500"
+                           v-model="form.amount"/>
+                </div>
+                <div class="mt-1">
+                    <label class="fixed-width-label text-right" for="inputLockedUntil">Locked Until: </label>
+                    <input type="text"
+                           id="inputLockedUntil"
+                           class="ml-2 form-control fixed-width-input d-inline-block"
+                           placeholder="10/05/2020"
+                           v-model="form.lockedUntil"/>
+                </div>
+                <b-button variant="primary" class="mt-2" @click="lockupTokens">
+                    <span v-if="!lockingUp">Lockup</span>
+                    <SmallSpinner v-else />
+                </b-button>
+            </div>
+            <div class="col">
+                <h3>Withdrawal</h3>
+                <div>
+                    <label class="fixed-width-label text-right" for="inputBeneficiaryWithdrawal">Beneficiary:</label>
+                    <input type="text"
+                           id="inputBeneficiaryWithdrawal"
+                           class="ml-2 form-control fixed-width-input d-inline-block"
+                           placeholder="0x123..."
+                           v-model="form.beneficiaryWithdrawal"/>
+                </div>
+                <b-button variant="primary" class="mt-2" @click="withdrawal">
+                    <span v-if="!withdrawing">Withdraw</span>
+                    <SmallSpinner v-else />
+                </b-button>
+            </div>
         </div>
-        <div class="mt-1">
-            <label class="fixed-width-label text-right" for="inputAmount">Amount: </label>
-            <input type="text"
-                   id="inputAmount"
-                   class="ml-2 form-control fixed-width-input d-inline-block"
-                   placeholder="500"
-                   v-model="form.amount"/>
-        </div>
-        <div class="mt-1">
-            <label class="fixed-width-label text-right" for="inputLockedUntil">Locked Until: </label>
-            <input type="text"
-                   id="inputLockedUntil"
-                   class="ml-2 form-control fixed-width-input d-inline-block"
-                   placeholder="10/05/2020"
-                   v-model="form.lockedUntil"/>
-        </div>
-        <b-button variant="primary" class="mt-2" @click="lockupTokens">
-            <span v-if="!lockingUp">Lockup</span>
-            <SmallSpinner v-else />
-        </b-button>
     </div>
 </template>
 
@@ -67,6 +87,7 @@
             return {
                 form: {
                     beneficiary: '',
+                    beneficiaryWithdrawal: '',
                     amount: '',
                     lockedUntil: '',
                 },
@@ -77,7 +98,8 @@
                     escrowContract: null,
                     genericERC20TokenContract: null
                 },
-                lockingUp: false
+                lockingUp: false,
+                withdrawing: false
             }
         },
         methods: {
@@ -92,7 +114,7 @@
                 // Lockup
                 const lockupTx = await this.web3.escrowContract.lock(
                     this.form.beneficiary,
-                    this.form.amount,
+                    ethers.utils.parseUnits(this.form.amount, '18'),
                     this.form.lockedUntil,
                     {
                         gasLimit: 250000
@@ -104,6 +126,14 @@
                 await lockupTx.wait(1);
 
                 this.lockingUp = false;
+            },
+            async withdrawal() {
+                this.withdrawing = true;
+
+                const withdrawlTx = await this.web3.escrowContract.withdrawal(beneficiaryWithdrawal);
+                await withdrawlTx.wait(1);
+
+                this.withdrawing = false;
             }
         }
     }
@@ -115,6 +145,6 @@
     }
 
     .fixed-width-input {
-        width: 250px;
+        width: 375px;
     }
 </style>

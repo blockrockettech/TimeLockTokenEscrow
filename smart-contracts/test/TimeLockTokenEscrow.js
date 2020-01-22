@@ -122,6 +122,28 @@ contract('TimeLockTokenEscrow tests', function ([creator, beneficiary1, random, 
             // Check the balance of beneficiary1
             (await this.token.balanceOf(beneficiary1)).should.be.bignumber.equal(amountToLockUp);
          });
+
+         it('Can re-lock up tokens after a withdrawal', async function() {
+            await lockupTokens(
+                this.token,
+                this.timeLockTokenEscrow,
+                beneficiary1,
+                amountToLockUp,
+                new BN('0')
+            );
+
+            await this.timeLockTokenEscrow.withdrawal(beneficiary1, {from: random});
+
+            await lockupTokens(
+                this.token,
+                this.timeLockTokenEscrow,
+                beneficiary1,
+                amountToLockUp,
+                new BN('0')
+            );
+
+            (await this.token.balanceOf(this.timeLockTokenEscrow.address)).should.be.bignumber.equal(amountToLockUp);
+         });
       });
 
       describe('requires', function() {
@@ -145,7 +167,7 @@ contract('TimeLockTokenEscrow tests', function ([creator, beneficiary1, random, 
 
             await expectRevert(
                 this.timeLockTokenEscrow.withdrawal(beneficiary1),
-                "Tokens have already been claimed"
+                "There are no tokens locked up for this address"
             );
          });
 
