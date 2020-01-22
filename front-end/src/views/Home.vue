@@ -25,7 +25,7 @@
                         </div>
                         <div class="mt-1">
                             <label class="fixed-width-label text-right">Locked Until: </label>
-                            <datetime format="DD-MM-YYYY h:i:s"
+                            <DateTimePicker format="DD-MM-YYYY h:i:s"
                                       v-model='form.lockedUntil'
                                       firstDayOfWeek="1"
                                       class="ml-2 form-control fixed-width-input d-inline-block test" />
@@ -129,11 +129,11 @@
     import TestToken from '../truffleconf/TestToken';
 
     import SmallSpinner from "../components/SmallSpinner";
-    import datetime from 'vuejs-datetimepicker'
+    import DateTimePicker from "../components/DateTimePicker";
 
     export default {
         name: 'home',
-        components: {SmallSpinner, datetime},
+        components: {SmallSpinner, DateTimePicker},
         async created() {
             await window.ethereum.enable();
             this.web3.provider = new ethers.providers.Web3Provider(web3.currentProvider);
@@ -234,7 +234,7 @@
     }
 
     .fixed-width-input {
-        width: 375px;
+        width: 375px !important;
     }
 
     input#tj-datetime-input {
