@@ -1,6 +1,5 @@
 <template>
     <div class="container mt-4">
-        <h1>Time Lock Token Escrow (XTP)</h1>
         <div class="row mt-2">
             <div class="col">
                 <h3>Lockup</h3>
@@ -49,6 +48,35 @@
                 </b-button>
             </div>
         </div>
+        <div class="row mt-5">
+            <div class="col">
+                <h2>Lock up Information</h2>
+                <div>
+                    <label class="fixed-width-label text-right" for="inputBeneficiaryLockup">Beneficiary:</label>
+                    <input type="text"
+                           id="inputBeneficiaryLockup"
+                           class="ml-2 form-control fixed-width-input d-inline-block"
+                           placeholder="0x123..."
+                           v-model="form.beneficiaryLockup"/>
+                </div>
+                <b-button variant="primary" class="mt-2" @click="search">
+                    Search
+                </b-button>
+            </div>
+            <div class="col">
+                <div v-if="lockUp.amount">
+                    <div>
+                        <strong>Beneficiary</strong>: {{this.lockUp.beneficiary}}
+                    </div>
+                    <div>
+                        <strong>Amount</strong>: {{this.lockUp.amount}} XTP
+                    </div>
+                    <div>
+                        <strong>Locked Until</strong>: {{this.lockUp.lockedUntil}}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -88,6 +116,12 @@
                 form: {
                     beneficiary: '',
                     beneficiaryWithdrawal: '',
+                    beneficiaryLockup: '',
+                    amount: '',
+                    lockedUntil: '',
+                },
+                lockUp: {
+                    beneficiary: '',
                     amount: '',
                     lockedUntil: '',
                 },
@@ -130,10 +164,16 @@
             async withdrawal() {
                 this.withdrawing = true;
 
-                const withdrawlTx = await this.web3.escrowContract.withdrawal(beneficiaryWithdrawal);
-                await withdrawlTx.wait(1);
+                const withdrawalTx = await this.web3.escrowContract.withdrawal(this.form.beneficiaryWithdrawal);
+                await withdrawalTx.wait(1);
 
                 this.withdrawing = false;
+            },
+            async search() {
+                const {amount, lockedUntil} = await this.web3.escrowContract.beneficiaryToTimeLock(this.form.beneficiaryLockup);
+                this.lockUp.amount = ethers.utils.formatUnits(amount, '18');
+                this.lockUp.lockedUntil = this.$moment.unix(lockedUntil.toString());
+                this.lockUp.beneficiary = this.form.beneficiaryLockup;
             }
         }
     }
