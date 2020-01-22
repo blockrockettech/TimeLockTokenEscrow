@@ -2,7 +2,7 @@
     <div class="container mt-4">
         <div class="row mt-2">
             <div class="col">
-                <div class="card">
+                <div class="card min-height-300">
                     <div class="card-header">
                         <h5>Token Lockup</h5>
                     </div>
@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="card-footer text-right">
-                        <b-button variant="primary" class="mt-2" @click="lockupTokens">
+                        <b-button variant="primary" class="mt-2" @click="lockupTokens" :disabled="lockingUp">
                             <span v-if="!lockingUp">Lockup</span>
                             <SmallSpinner v-else/>
                         </b-button>
@@ -41,48 +41,62 @@
                 </div>
             </div>
             <div class="col">
-                <h3>Withdrawal</h3>
-                <div>
-                    <label class="fixed-width-label text-right" for="inputBeneficiaryWithdrawal">Beneficiary:</label>
-                    <input type="text"
-                           id="inputBeneficiaryWithdrawal"
-                           class="ml-2 form-control fixed-width-input d-inline-block"
-                           placeholder="0x123..."
-                           v-model="form.beneficiaryWithdrawal"/>
+                <div class="card min-height-300">
+                    <div class="card-header">
+                        <h5>Withdrawal</h5>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <label class="fixed-width-label text-right" for="inputBeneficiaryWithdrawal">Beneficiary:</label>
+                            <input type="text"
+                                   id="inputBeneficiaryWithdrawal"
+                                   class="ml-2 form-control fixed-width-input d-inline-block"
+                                   placeholder="0x123..."
+                                   v-model="form.beneficiaryWithdrawal"/>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <b-button variant="primary" class="mt-2" @click="withdrawal" :disabled="withdrawing">
+                            <span v-if="!withdrawing">Withdraw</span>
+                            <SmallSpinner v-else/>
+                        </b-button>
+                    </div>
                 </div>
-                <b-button variant="primary" class="mt-2" @click="withdrawal">
-                    <span v-if="!withdrawing">Withdraw</span>
-                    <SmallSpinner v-else/>
-                </b-button>
             </div>
         </div>
         <div class="row mt-5">
             <div class="col">
-                <h2>Lock up Information</h2>
-                <div>
-                    <label class="fixed-width-label text-right" for="inputBeneficiaryLockup">Beneficiary:</label>
-                    <input type="text"
-                           id="inputBeneficiaryLockup"
-                           class="ml-2 form-control fixed-width-input d-inline-block"
-                           placeholder="0x123..."
-                           v-model="form.beneficiaryLockup"/>
+                <div class="card">
+                    <div class="card-header"><h5>Lock up Information</h5></div>
+                    <div class="card-body">
+                        <div>
+                            <label class="fixed-width-label text-right" for="inputBeneficiaryLockup">Beneficiary:</label>
+                            <input type="text"
+                                   id="inputBeneficiaryLockup"
+                                   class="ml-2 form-control fixed-width-input d-inline-block"
+                                   placeholder="0x123..."
+                                   v-model="form.beneficiaryLockup"/>
+                        </div>
+                        <div class="mt-4 text-left alert alert-info" v-if="lockUp.amount">
+                            <div>
+                                <strong>Beneficiary</strong>: {{this.lockUp.beneficiary}}
+                            </div>
+                            <div>
+                                <strong>Amount</strong>: {{this.lockUp.amount}} XTP
+                            </div>
+                            <div>
+                                <strong>Locked Until</strong>: {{this.lockUp.lockedUntil}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <b-button variant="primary" class="mt-2" @click="search">
+                            Search
+                        </b-button>
+                    </div>
                 </div>
-                <b-button variant="primary" class="mt-2" @click="search">
-                    Search
-                </b-button>
             </div>
             <div class="col">
-                <div v-if="lockUp.amount">
-                    <div>
-                        <strong>Beneficiary</strong>: {{this.lockUp.beneficiary}}
-                    </div>
-                    <div>
-                        <strong>Amount</strong>: {{this.lockUp.amount}} XTP
-                    </div>
-                    <div>
-                        <strong>Locked Until</strong>: {{this.lockUp.lockedUntil}}
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -194,5 +208,9 @@
 
     .fixed-width-input {
         width: 375px;
+    }
+
+    .min-height-300 {
+        min-height: 300px;
     }
 </style>
