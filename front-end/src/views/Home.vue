@@ -25,7 +25,7 @@
                         </div>
                         <div class="mt-1">
                             <label class="fixed-width-label text-right">Locked Until: </label>
-                            <DateTimePicker format="DD-MM-YYYY h:i:s"
+                            <DateTimePicker format="DD-MM-YYYY H:i:s"
                                       v-model='form.lockedUntil'
                                       firstDayOfWeek="1"
                                       class="ml-2 form-control fixed-width-input d-inline-block test" />
