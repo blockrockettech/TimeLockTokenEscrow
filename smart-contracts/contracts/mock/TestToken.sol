@@ -661,7 +661,7 @@ contract TestToken is ERC20Detailed, Ownable {
         tokensAddress = _tokensAddress;
 
 //        teamTokensVesting = new TokenVesting(tokensAddress, 91 days, 0 days, 274 days, false);
-        
+
         _mint(tokensAddress, 3000000000 * (10 ** uint256(decimals())));
 
 //        _mint(address(teamTokensVesting), 7000000000 * (10 ** uint256(decimals())));

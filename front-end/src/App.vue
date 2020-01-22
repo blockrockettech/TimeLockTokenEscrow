@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand>Time Lock Token Escrow (XTP)</b-navbar-brand>
+      <b-navbar-brand>Time Lock Token Escrow <span class="badge badge-light ml-4">XTP</span></b-navbar-brand>
     </b-navbar>
     <router-view/>
   </div>
