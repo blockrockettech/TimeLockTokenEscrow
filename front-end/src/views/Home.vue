@@ -119,6 +119,31 @@
                 </div>
             </div>
         </div>
+        <div class="row mt-5">
+            <div class="col-6">
+                <div class="card min-height-300">
+                    <div class="card-header">
+                        <h5>Cancel Timelock</h5>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <label class="fixed-width-label text-right" for="inputCancelBeneficiaryLockup">Beneficiary:</label>
+                            <input type="text"
+                                   id="inputCancelBeneficiaryLockup"
+                                   class="ml-2 form-control fixed-width-input d-inline-block"
+                                   placeholder="0x123..."
+                                   v-model="form.cancelBeneficiaryLock"/>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <b-button variant="primary" class="mt-2" @click="cancelTimelock" :disabled="cancelling">
+                            <span v-if="!cancelling">Cancel</span>
+                            <SmallSpinner v-else/>
+                        </b-button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -163,6 +188,7 @@
                     beneficiaryLockup: '',
                     amount: '',
                     lockedUntil: '',
+                    cancelBeneficiaryLock: '',
                 },
                 lockUp: {
                     beneficiary: '',
@@ -178,6 +204,7 @@
                 },
                 lockingUp: false,
                 withdrawing: false,
+                cancelling: false,
                 tokenBalance: null,
             };
         },
@@ -218,6 +245,19 @@
                 await withdrawalTx.wait(1);
 
                 this.withdrawing = false;
+            },
+            async cancelTimelock() {
+                this.cancelling = true;
+
+                const withdrawalTx = await this.web3.escrowContract.revertLock(
+                    this.form.cancelBeneficiaryLock,
+                    {
+                        gasLimit: 250000
+                    }
+                );
+                await withdrawalTx.wait(1);
+
+                this.cancelling = false;
             },
             async balance() {
 
