@@ -94,3 +94,4 @@ modules.xml
 .idea/sonarlint
 
 # End of https://www.gitignore.io/api/intellij+all
+.DS_Store
