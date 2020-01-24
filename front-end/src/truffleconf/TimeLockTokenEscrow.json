@@ -7716,12 +7716,12 @@
         }
       },
       "links": {},
-      "address": "0x84D1cB64E6db92F4e9f2d25Cbe8b1a0E25EE6730",
-      "transactionHash": "0x9ae46b53bf7466a1f09dc0d574f18d2d70c271ae9caad7069bfcdf96f5580b69"
+      "address": "0xAE78F0AdDaB6B5d9Dc9fE1bA256c741030eE7e74",
+      "transactionHash": "0x47f89d658832a61b9bc0bb620f3a791c9bd60f66f36dcdb554ec4071a1f7691e"
     }
   },
   "schemaVersion": "3.0.19",
-  "updatedAt": "2020-01-24T09:18:09.307Z",
+  "updatedAt": "2020-01-24T10:24:18.013Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

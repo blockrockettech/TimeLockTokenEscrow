@@ -123,11 +123,11 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-5">
+        <div class="row mt-5 mb-5">
             <div class="col-6">
                 <div class="card min-height-300">
                     <div class="card-header">
-                        <h5>Cancel Timelock</h5>
+                        <h5>Cancel Time Lock</h5>
                     </div>
                     <div class="card-body">
                         <div>
