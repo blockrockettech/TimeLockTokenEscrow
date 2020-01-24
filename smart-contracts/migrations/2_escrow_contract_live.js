@@ -9,6 +9,7 @@ module.exports = async function (deployer, network, accounts) {
 
     const creator = getAccountAddress(accounts, 0, network, MNEMONIC, INFURA_KEY);
 
-    const escrow = await deployer.deploy(TimeLockTokenEscrow, "0x6368e1E18c4C419DDFC608A0BEd1ccb87b9250fc", {from: creator});
+    await deployer.deploy(TimeLockTokenEscrow, "0x6368e1E18c4C419DDFC608A0BEd1ccb87b9250fc", {from: creator});
+    const escrow = await TimeLockTokenEscrow.deployed();
     console.log('escrow.address', escrow.address);
 };
