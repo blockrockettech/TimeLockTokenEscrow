@@ -26,9 +26,9 @@
                         <div class="mt-1">
                             <label class="fixed-width-label text-right">Locked Until: </label>
                             <DateTimePicker format="DD-MM-YYYY H:i:s"
-                                      v-model='form.lockedUntil'
-                                      firstDayOfWeek="1"
-                                      class="ml-2 form-control fixed-width-input d-inline-block test" />
+                                            v-model='form.lockedUntil'
+                                            firstDayOfWeek="1"
+                                            class="ml-2 form-control fixed-width-input d-inline-block test"/>
                         </div>
                     </div>
                     <div class="card-footer text-right">
@@ -46,7 +46,8 @@
                     </div>
                     <div class="card-body">
                         <div>
-                            <label class="fixed-width-label text-right" for="inputBeneficiaryWithdrawal">Beneficiary:</label>
+                            <label class="fixed-width-label text-right"
+                                   for="inputBeneficiaryWithdrawal">Beneficiary:</label>
                             <input type="text"
                                    id="inputBeneficiaryWithdrawal"
                                    class="ml-2 form-control fixed-width-input d-inline-block"
@@ -69,7 +70,8 @@
                     <div class="card-header"><h5>Time Lock Information</h5></div>
                     <div class="card-body">
                         <div>
-                            <label class="fixed-width-label text-right" for="inputBeneficiaryLockup">Beneficiary:</label>
+                            <label class="fixed-width-label text-right"
+                                   for="inputBeneficiaryLockup">Beneficiary:</label>
                             <input type="text"
                                    id="inputBeneficiaryLockup"
                                    class="ml-2 form-control fixed-width-input d-inline-block"
@@ -109,7 +111,9 @@
                                    placeholder="0x123..."
                                    v-model="form.address"/>
                         </div>
-                        <div class="mt-4 text-left alert alert-info" v-if="tokenBalance"><strong>Balance:</strong> {{tokenBalance}}</div>
+                        <div class="mt-4 text-left alert alert-info" v-if="tokenBalance"><strong>Balance:</strong>
+                            {{tokenBalance}}
+                        </div>
                     </div>
                     <div class="card-footer text-right">
                         <b-button variant="primary" class="mt-2" @click="balance">
@@ -127,7 +131,8 @@
                     </div>
                     <div class="card-body">
                         <div>
-                            <label class="fixed-width-label text-right" for="inputCancelBeneficiaryLockup">Beneficiary:</label>
+                            <label class="fixed-width-label text-right"
+                                   for="inputCancelBeneficiaryLockup">Beneficiary:</label>
                             <input type="text"
                                    id="inputCancelBeneficiaryLockup"
                                    class="ml-2 form-control fixed-width-input d-inline-block"
@@ -137,7 +142,7 @@
                     </div>
                     <div class="card-footer text-right">
                         <b-button variant="primary" class="mt-2" @click="cancelTimelock" :disabled="cancelling">
-                            <span v-if="!cancelling">Cancel</span>
+                            <span v-if="!cancelling">Cancel Lock</span>
                             <SmallSpinner v-else/>
                         </b-button>
                     </div>
@@ -153,8 +158,8 @@
     import TimeLockTokenEscrow from '../truffleconf/TimeLockTokenEscrow';
     import TestToken from '../truffleconf/TestToken';
 
-    import SmallSpinner from "../components/SmallSpinner";
-    import DateTimePicker from "../components/DateTimePicker";
+    import SmallSpinner from '../components/SmallSpinner';
+    import DateTimePicker from '../components/DateTimePicker';
 
     export default {
         name: 'home',
